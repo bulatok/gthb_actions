@@ -1,0 +1,12 @@
+name: testing
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  write:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo 'bruh'
