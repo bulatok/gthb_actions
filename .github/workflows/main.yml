@@ -55,6 +55,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_SERVER_PORT }}
           script:
+            cd /gthb_actions/
             echo "fetching new version of app"
             git fetch origin main && git merge origin/main
             echo "stopping current app"
