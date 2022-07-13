@@ -1,5 +1,6 @@
 import datetime
 import time
 while True:
-    time.sleep(5)
+    # wanna check pr
+    time.sleep(4)
     print(datetime.datetime.now())
