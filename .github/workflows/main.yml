@@ -1,0 +1,24 @@
+name: testing
+
+on:
+  pull_request:
+    branches: [main]
+    types:
+      - closed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Printer
+      run: echo 'Success build'
+
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository checkout
+        run: echo 'deployed'
