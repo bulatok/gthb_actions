@@ -21,4 +21,6 @@ jobs:
           SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
           SSH_KEY_PATH: ${{ github.workspace }}/../private.key
       - name: checkout server
-        run: ssh -i $SSH_KEY_PATH ${{secrets.SSH_USERNAME}}@${{secrets.SSH_HOST}} && cd /home/egor1/BookHive/ && touch actions.txt
+        run: ssh -i $SSH_KEY_PATH ${{secrets.SSH_USERNAME}}@${{secrets.SSH_HOST}} && cd /home/${{secrets.SSH_USERNAME}}/BookHive/ && touch actions.txt
+        env:
+          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
