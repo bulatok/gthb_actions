@@ -17,7 +17,6 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          fingerprint: ${{ secrets.SSH_PUBLIC_KEY }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script:
             cd /home/egor1/BookHive/ && touch from_actins.txt
