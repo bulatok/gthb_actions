@@ -1,24 +1,22 @@
-name: testing
+name: deploy
 
 on:
-  pull_request:
-    branches: [main]
-    types:
-      - closed
-
+  push:
+    branches:
+      - main
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
-
-    - name: Printer
-      run: echo 'Success build'
-
   deploy:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    timeout-minutes: 1
     steps:
       - name: Repository checkout
-        run: echo 'deployed'
+        uses: actions/checkout@v2
+
+      - name: Deploy
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          fingerprint: ${{ secrets.SSH_PUBLIC_KEY }}
+          script:
+            cd /home/egor1/BookHive/ && touch from_actins.txt
