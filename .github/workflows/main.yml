@@ -5,18 +5,19 @@ on:
     branches:
       - main
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    timeout-minutes: 1
     steps:
-      - name: Repository checkout
-        uses: actions/checkout@v2
-
-      - name: Deploy
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script:
-            cd /home/egor1/BookHive/ && touch from_actins.txt
+      - name: Create SSH key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ../private.key
+          sudo chmod 600 ../private.key
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+        shell: bash
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+          SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
+          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+      - name: checkout server
+        run: ssh -i $SSH_KEY_PATH {{secrets.SSH_USERNAME}}@{{secrets.SSH_HOST}} && cd /home/egor1/BookHive/ && touch actions.txt
